@@ -13,6 +13,7 @@ connection.connect(function (err) {
 
     //Initialize only if there is no error
     initialize();
+
 });
 
 function initialize() {
@@ -23,6 +24,7 @@ function initialize() {
     connection.query(query, function (error, results) {
         if (error) throw error;
 
+        //Print updated table everytime initialized
         console.table(results)
         inquirer.prompt([
             {
@@ -47,6 +49,8 @@ function initialize() {
                     if (answer.unitQuestion <= i.stock_quantity) {
 
                         var newStock = parseFloat(i.stock_quantity) - parseFloat(answer.unitQuestion)
+                        var totalCost = parseFloat(i.price) * parseFloat(answer.unitQuestion)
+                        console.log("Purchasing " + parseFloat(answer.unitQuestion) + " " + i.product_name + " will cost you $" + totalCost);
 
                         // update database
                         connection.query(
@@ -61,7 +65,6 @@ function initialize() {
                             ],
                             function (err, res) {
                                 if (err) throw err;
-                                console.log("Product purchased succesfully!");
 
                                 initialize()
                             })
@@ -75,6 +78,7 @@ function initialize() {
                 }
 
             }
+
         });
     });
 }
