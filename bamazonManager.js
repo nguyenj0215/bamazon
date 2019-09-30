@@ -23,22 +23,20 @@ function initialize() {
             name: "promptList",
             type: "list",
             message: "What would you like to do: ",
-            choices: ["View Products", "View Low Inventory", "Add to inventory", "Add New Product", "EXIT"]
+            choices: ["View Products", "View Low Inventory", "Add to Inventory", "Add New Product", "EXIT"]
         }
     ]).then(function (answers) {
         if (answers.promptList === "View Products") {
             viewProducts();
         }
-        else if (
-            answers.promptList === "View Low Inventory"
-        ) {
+        else if (answers.promptList === "View Low Inventory") {
             lowInventory();
         }
-        else if (answers.promptList === "Add To Inventory") {
-            addInventory()
+        else if (answers.promptList === "Add to Inventory") {
+            addInventory();
         }
         else if (answers.promptList === "Add New Product") {
-            addProduct()
+            addProduct();
         }
         else if (answers.promptList === "EXIT") {
             connection.end(); return;
@@ -81,4 +79,57 @@ function lowInventory() {
         //Return to main screen
         initialize()
     })
+}
+
+//Function to add to inventory
+function addInventory() {
+    var query = "SELECT * from products";
+
+    connection.query(query, function (error, results) {
+        if (error) throw error;
+
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "What is the id of the product you want to add?",
+                name: "idAdd"
+            },
+            {
+                type: "input",
+                message: "How many units do you want to add?",
+                name: "unitAdd"
+            }
+        ]).then(function (answer) {
+            for (var i of results) {
+
+                //Find the id in the database the matches the id given in the prompt
+                if (i.id == answer.idAdd) {
+
+                    var newInventory = parseFloat(i.stock_quantity) + parseFloat(answer.unitAdd)
+
+                    console.log("-----------------------------------------------")
+                    console.log("Added " + parseFloat(answer.unitAdd) + " " + i.product_name + "s. The new total in inventory is " + newInventory);
+                    console.log("-----------------------------------------------")
+                    // update database
+                    connection.query(
+                        "UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                                stock_quantity: newInventory
+                            },
+                            {
+                                id: i.id
+                            }
+                        ],
+                        function (err, res) {
+                            if (err) throw err;
+
+                            initialize()
+                        })
+
+                }
+            }
+        })
+    })
+
 }
