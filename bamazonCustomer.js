@@ -50,14 +50,15 @@ function initialize() {
 
                         var newStock = parseFloat(i.stock_quantity) - parseFloat(answer.unitQuestion)
                         var totalCost = parseFloat(i.price) * parseFloat(answer.unitQuestion)
-                        console.log("Purchasing " + parseFloat(answer.unitQuestion) + " " + i.product_name + " will cost you $" + totalCost);
+                        console.log("Purchasing " + parseFloat(answer.unitQuestion) + " " + i.product_name + "(s) will cost you $" + totalCost);
 
                         // update database
                         connection.query(
                             "UPDATE products SET ? WHERE ?",
                             [
                                 {
-                                    stock_quantity: newStock
+                                    stock_quantity: newStock,
+                                    total_sales: i.total_sales += totalCost 
                                 },
                                 {
                                     id: i.id
