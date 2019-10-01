@@ -21,14 +21,14 @@ Screenshots:
 bamazonCustomer:
 ![bamazonCustomer](/customerPurchase.png)
 bamazonManager:
-![bamazonManager](/managerList.png)
-![bamazonManager](/managerView.png)
-![bamazonManager](/managerAdd.png)
-![bamazonManager](/managerLow.png)
-![bamazonManager](/managerProduct.png)
+![bamazonManager](images/managerList.png)
+![bamazonManager](images/managerView.png)
+![bamazonManager](images/managerAdd.png)
+![bamazonManager](images/managerLow.png)
+![bamazonManager](images/managerProduct.png)
 bamazonSupervisor:
-![bamazonSupervisor](/supervisorList.png)
-![bamazonSupervisor](/supervisorView.png)
-![bamazonSupervisor](/supervisorAdd.png)
+![bamazonSupervisor](images/supervisorList.png)
+![bamazonSupervisor](images/supervisorView.png)
+![bamazonSupervisor](images/supervisorAdd.png)
 
 
