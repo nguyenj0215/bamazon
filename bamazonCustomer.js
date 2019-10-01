@@ -52,8 +52,10 @@ function initialize() {
                         //Calculate cost if purchase is sucessful
                         var totalCost = parseFloat(i.price) * parseFloat(answer.unitQuestion)
 
+                        console.log("\r\n--------------------------------------------------")
                         console.log("Purchasing " + parseFloat(answer.unitQuestion) + " " + i.product_name + "(s) will cost you $" + totalCost);
-
+                        console.log("--------------------------------------------------\r\n")
+                        
                         calcDepartmentSales(i.department_name, totalCost);
                         // update database
                         connection.query(

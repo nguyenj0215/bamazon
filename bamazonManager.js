@@ -60,7 +60,7 @@ function viewProducts() {
 //Function to view low inventory
 function lowInventory() {
     var query = "SELECT * from products";
-    console.log("-----------------------------------------------")
+    console.log("\r\n-----------------------------------------------")
     console.log("Here are product(s) that are low in inventory: ")
     console.log("-----------------------------------------------")
 
