@@ -19,7 +19,7 @@ connection.connect(function (err) {
 function initialize() {
 
     //Target products table in database
-    var query = "SELECT * from products";
+    var query = "SELECT * FROM products";
 
     connection.query(query, function (error, results) {
         if (error) throw error;
@@ -40,16 +40,18 @@ function initialize() {
         ]).then(function (answer) {
             for (var i of results) {
 
-                //console log tested results and answers, both working properly
-
                 //Find the id in the database the matches the id given in the prompt
                 if (i.id == answer.idQuestion) {
 
                     //Recalculate stock if there is enough in stock to purchase
                     if (answer.unitQuestion <= i.stock_quantity) {
 
+                        //Calculate new stock total
                         var newStock = parseFloat(i.stock_quantity) - parseFloat(answer.unitQuestion)
+
+                        //Calculate cost if purchase is sucessful
                         var totalCost = parseFloat(i.price) * parseFloat(answer.unitQuestion)
+
                         console.log("Purchasing " + parseFloat(answer.unitQuestion) + " " + i.product_name + "(s) will cost you $" + totalCost);
 
                         // update database
@@ -58,22 +60,22 @@ function initialize() {
                             [
                                 {
                                     stock_quantity: newStock,
-                                    total_sales: i.total_sales += totalCost 
                                 },
                                 {
                                     id: i.id
                                 }
                             ],
-                            function (err, res) {
+                            function (err) {
                                 if (err) throw err;
 
-                                initialize()
-                            })
+                                calcDepartmentSales(i.department_name, totalCost);
 
+                                initialize();
+                            })
                     }
                     else {
                         console.log("Sorry, we do not have that many in stock. Try again");
-                        initialize(); 
+                        initialize();
                     }
 
                 }
@@ -81,5 +83,30 @@ function initialize() {
             }
 
         });
+    });
+
+}
+
+function calcDepartmentSales(productDepartment, purchaseCost) {
+    var query = "SELECT total_sales FROM departments WHERE ?";
+    connection.query(query, { department_name: productDepartment }, function (err, res) {
+        if (err) throw err;
+
+        var departmentSales = res[0].total_sales;
+        var updatedDepartmentSales = parseInt(departmentSales) + parseInt(purchaseCost);
+
+        updateDatabaseSales(updatedDepartmentSales, productDepartment)
+    })
+}
+
+function updateDatabaseSales(updatedCost, productDepartment) {
+    var query = "UPDATE departments SET ? WHERE ?";
+    connection.query(query, [{
+        total_sales: updatedCost
+    }, {
+        department_name: productDepartment
+    }], function (err) {
+        if (err) throw err;
+
     });
 }

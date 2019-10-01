@@ -4,7 +4,7 @@ var connection = mysql.createConnection({
     host: 3306,
     user: 'root',
     password: 'password',
-    database: 'departments_db'
+    database: 'bamazon_db'
 });
 
 connection.connect(function (err) {
@@ -38,11 +38,23 @@ function initialize() {
     });
 }
 function viewSales() {
+    //Query needs to access both databases and their tables 
+    //display department id, department name, over_head_costs, product sales, calculate total profit
+    var query = "Select department_id AS department_id, department_name AS department_name,"
+    query += "over_head_costs AS over_head_costs, total_sales AS total_sales,"
+    query += "(total_sales - over_head_costs) AS total_profit FROM departments";
 
+    connection.query(query, function (error, results) {
+        if (error) throw error;
+
+        console.table(results)
+
+        initialize()
+    })
 }
 
 function newDepartment() {
-    var query = "SELECT * from departments";
+    var query = "SELECT * FROM departments";
 
     connection.query(query, function (error, results) {
         if (error) throw error;
