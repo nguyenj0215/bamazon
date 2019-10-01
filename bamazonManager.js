@@ -121,7 +121,7 @@ function addInventory() {
                                 id: i.id
                             }
                         ],
-                        function (err, res) {
+                        function (err) {
                             if (err) throw err;
 
                             initialize()
@@ -137,7 +137,7 @@ function addInventory() {
 function addProduct() {
     var query = "SELECT * from products";
 
-    connection.query(query, function (error, results) {
+    connection.query(query, function (error) {
         if (error) throw error;
 
         inquirer.prompt([
