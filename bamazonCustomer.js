@@ -54,6 +54,7 @@ function initialize() {
 
                         console.log("Purchasing " + parseFloat(answer.unitQuestion) + " " + i.product_name + "(s) will cost you $" + totalCost);
 
+                        calcDepartmentSales(i.department_name, totalCost);
                         // update database
                         connection.query(
                             "UPDATE products SET ? WHERE ?",
@@ -68,9 +69,8 @@ function initialize() {
                             function (err) {
                                 if (err) throw err;
 
-                                calcDepartmentSales(i.department_name, totalCost);
-
-                                initialize();
+                                //End connection after a purchase
+                                connection.end(); return;
                             })
                     }
                     else {

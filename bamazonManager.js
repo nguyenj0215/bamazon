@@ -177,7 +177,7 @@ function addProduct() {
                     console.log("-----------------------------------------------")
                     console.log("Sucessfully added " + answer.nameProd + "(s) to inventory.")
                     console.log("-----------------------------------------------")
-                    initialize();
+
                 }
             );
         })
