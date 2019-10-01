@@ -24,7 +24,7 @@ bamazonManager:
 ![bamazonManager](/managerList.png)
 ![bamazonManager](/managerView.png)
 ![bamazonManager](/managerAdd.png)
-![bamazonManager](/managerLow..png)
+![bamazonManager](/managerLow.png)
 ![bamazonManager](/managerProduct.png)
 bamazonSupervisor:
 ![bamazonSupervisor](/supervisorList.png)
