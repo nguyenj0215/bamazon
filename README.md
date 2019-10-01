@@ -19,7 +19,7 @@ Link to the github repo: [GitHub Repo](https://github.com/nguyenj0215/bamazon)
 
 Screenshots: 
 bamazonCustomer:
-![bamazonCustomer](/customerPurchase.png)
+![bamazonCustomer](images/customerPurchase.png)
 bamazonManager:
 ![bamazonManager](images/managerList.png)
 ![bamazonManager](images/managerView.png)
